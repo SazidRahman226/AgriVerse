@@ -23,5 +23,8 @@ public class RoleConfig implements CommandLineRunner {
         if (!roleRepository.existsByName("ROLE_ADMIN")) {
             roleRepository.save(new Role("ROLE_ADMIN"));
         }
+        if (!roleRepository.existsByName("ROLE_MODERATOR")) {
+            roleRepository.save(new Role("ROLE_MODERATOR"));
+        }
     }
 }
