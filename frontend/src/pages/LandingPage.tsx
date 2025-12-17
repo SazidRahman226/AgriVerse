@@ -102,38 +102,6 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Backend Status Widget */}
-      <section className="py-6">
-        <div className="container mx-auto px-4">
-          <Card className="max-w-md mx-auto border-border/50">
-            <CardContent className="py-4">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-muted-foreground">Backend Status</span>
-                <div className="flex items-center gap-2">
-                  {backendStatus === 'loading' && (
-                    <>
-                      <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground">Connecting...</span>
-                    </>
-                  )}
-                  {backendStatus === 'connected' && (
-                    <>
-                      <CheckCircle className="h-4 w-4 text-success" />
-                      <span className="text-sm text-success">{statusMessage || 'Connected'}</span>
-                    </>
-                  )}
-                  {backendStatus === 'disconnected' && (
-                    <>
-                      <XCircle className="h-4 w-4 text-destructive" />
-                      <span className="text-sm text-destructive">{statusMessage}</span>
-                    </>
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
 
       {/* Features Section */}
       <section className="py-20 bg-card/30">

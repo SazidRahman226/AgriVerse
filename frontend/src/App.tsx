@@ -19,6 +19,12 @@ import AdminPage from "@/pages/AdminPage";
 import UnauthorizedPage from "@/pages/UnauthorizedPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 
+import ForumTopicsPage from "@/pages/forum/ForumTopicsPage";
+import ForumTopicPostsPage from "@/pages/forum/ForumTopicPostsPage";
+import ForumPostPage from "@/pages/forum/ForumPostPage";
+import CreateForumPostPage from "@/pages/forum/CreateForumPostPage";
+
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -62,6 +68,40 @@ const App = () => (
                     <AdminRoute>
                       <AdminPage />
                     </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/forum"
+                  element={
+                    <ProtectedRoute>
+                      <ForumTopicsPage />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/forum/topics/:topicId"
+                  element={
+                    <ProtectedRoute>
+                      <ForumTopicPostsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/forum/topics/:topicId/new"
+                  element={
+                    <ProtectedRoute>
+                      <CreateForumPostPage />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/forum/posts/:postId"
+                  element={
+                    <ProtectedRoute>
+                      <ForumPostPage />
+                    </ProtectedRoute>
                   }
                 />
 

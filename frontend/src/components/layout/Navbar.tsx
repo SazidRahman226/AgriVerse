@@ -35,6 +35,14 @@ const Navbar = () => {
           >
             Profile
           </Link>
+          <Link
+            to="/forum"
+            className="text-foreground/80 hover:text-primary transition-colors"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Forum
+          </Link>
+
           {isAdmin && (
             <Link
               to="/admin"
@@ -44,6 +52,8 @@ const Navbar = () => {
               <Shield className="h-4 w-4" />
               Admin
             </Link>
+
+            
           )}
         </>
       ) : null}
