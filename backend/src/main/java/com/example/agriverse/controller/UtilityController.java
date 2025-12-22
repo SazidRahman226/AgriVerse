@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class UtilityController {
     private final UserRepository userRepository;
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/user-info/{username}")
     public ResponseEntity<?> userInfo(@PathVariable String username) {
         User user = userRepository.findByUsername(username)
@@ -25,7 +25,7 @@ public class UtilityController {
 
         userInfo.setUsername(user.getUsername());
         userInfo.setEmail(user.getEmail());
-
+        userInfo.setIdentificationNumber(user.getIdentificationNumber());
         return ResponseEntity.ok(userInfo);
     }
 

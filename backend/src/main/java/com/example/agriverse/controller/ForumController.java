@@ -1,67 +1,79 @@
 package com.example.agriverse.controller;
 
-import com.example.agriverse.dto.ForumPostRequest;
-import com.example.agriverse.dto.SigninRequest;
-import com.example.agriverse.dto.SignupRequest;
-import com.example.agriverse.model.Forum;
-import com.example.agriverse.model.Role;
-import com.example.agriverse.model.User;
-import com.example.agriverse.repository.ForumRepository;
-import com.example.agriverse.repository.RoleRepository;
-import com.example.agriverse.repository.UserRepository;
-import com.example.agriverse.security.AuthEntryPointJwt;
-import com.example.agriverse.security.JwtUtil;
+import com.example.agriverse.dto.*;
 import com.example.agriverse.service.ForumService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-import java.util.Set;
-
 @RestController
-@RequestMapping("/forum")
+@RequestMapping("/api/forum")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173") // frontend URL
+@CrossOrigin(origins = "http://localhost:5173")
 public class ForumController {
-
-    private final UserRepository userRepo;
-    private final RoleRepository roleRepo;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
-    private final AuthEntryPointJwt authEntryPointJwt;
-
-    private final ForumRepository forumRepo;
 
     private final ForumService forumService;
 
-    @GetMapping("/")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> showAll() {
-        return ResponseEntity.ok(forumService.findAll());
+    // TOPICS
+    @GetMapping("/topics")
+    public ResponseEntity<?> listTopics() {
+        return ResponseEntity.ok(forumService.listTopics());
     }
 
-    @GetMapping("/{title}")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> findByTitle(@PathVariable String title) {
-        return ResponseEntity.ok(forumService.findByTitle(title));
-    }
-
-    @GetMapping("/all")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> findAll() {
-        return ResponseEntity.ok(forumService.findAll());
-    }
-
-    @PostMapping("/post")
+    // Only admin can create new forum types like "cows", "rice"
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Forum> createForumPost(@Valid @RequestBody ForumPostRequest request) {
-        Forum createdPost = forumService.createPost(request);
-        return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
+    @PostMapping("/topics")
+    public ResponseEntity<?> createTopic(@RequestBody CreateTopicRequest req) {
+        return ResponseEntity.ok(forumService.createTopic(req));
+    }
+
+    // POSTS
+    @PreAuthorize("hasAnyRole('USER','GOVT_OFFICER')")
+    @PostMapping("/posts")
+    public ResponseEntity<?> createPost(@RequestBody CreatePostRequest req) {
+        return ResponseEntity.ok(forumService.createPost(req));
+    }
+
+    @GetMapping("/topics/{topicId}/posts")
+    public ResponseEntity<?> listPostsByTopic(
+            @PathVariable Long topicId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(required = false) String q
+    ) {
+        return ResponseEntity.ok(forumService.listPostsByTopic(topicId, page, size, q));
+    }
+
+    @GetMapping("/posts/{postId}")
+    public ResponseEntity<?> getPost(@PathVariable Long postId) {
+        return ResponseEntity.ok(forumService.getPost(postId));
+    }
+
+    // COMMENTS
+    @PreAuthorize("hasAnyRole('USER','GOVT_OFFICER')")
+    @PostMapping("/posts/{postId}/comments")
+    public ResponseEntity<?> createComment(@PathVariable Long postId, @RequestBody CreateCommentRequest req) {
+        return ResponseEntity.ok(forumService.createComment(postId, req));
+    }
+
+    @GetMapping("/posts/{postId}/comments")
+    public ResponseEntity<?> listComments(
+            @PathVariable Long postId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "30") int size
+    ) {
+        return ResponseEntity.ok(forumService.listComments(postId, page, size));
+    }
+
+    @PreAuthorize("hasAnyRole('USER','GOVT_OFFICER')")
+    @GetMapping("/posts/mine")
+    public ResponseEntity<?> myPosts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+        return ResponseEntity.ok(forumService.listMyRecentPosts(page, size));
     }
 
 }
