@@ -26,6 +26,9 @@ public class AdminConfig implements CommandLineRunner {
 
         Role adminRole = roleRepository.findByName("ROLE_ADMIN")
                 .orElseGet(() -> roleRepository.save(new Role("ROLE_ADMIN")));
+        Role govtOfficerRole = roleRepository.findByName("ROLE_GOVT_OFFICER")
+                .orElseGet(() -> roleRepository.save(new Role("ROLE_GOVT_OFFICER")));
+
 
         if (!userRepository.existsByUsername("admin")) {
             User user = new User();
@@ -33,6 +36,7 @@ public class AdminConfig implements CommandLineRunner {
             user.setEmail("admin@example.com"); // better to use a real email format
             user.setPassword(passwordEncoder.encode("admin")); // never store plain text
             user.setRoles(Set.of(userRole, adminRole));
+            user.setEmailVerified(true);
 
             userRepository.save(user);
             System.out.println("✅ Admin user created: admin / admin");
