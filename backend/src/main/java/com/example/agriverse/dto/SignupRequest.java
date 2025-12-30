@@ -18,4 +18,10 @@ public class SignupRequest {
     @NotEmpty(message = "Password cannot be empty!\n")
     @NotBlank
     private String password;
+
+    // NEW: "USER" | "GOVT_OFFICER"
+    private String accountType;
+
+    // NEW: required if accountType == "GOVT_OFFICER"
+    private String identificationNumber;
 }
