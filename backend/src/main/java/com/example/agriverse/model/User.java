@@ -17,8 +17,8 @@ import static jakarta.persistence.FetchType.EAGER;
 @Builder
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq_gen")
-    @SequenceGenerator(name = "user_id_seq_gen", sequenceName = "user_id_gen", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_seq_gen")
+    @SequenceGenerator(name = "id_seq_gen", sequenceName = "id_gen", allocationSize = 1)
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -30,6 +30,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private boolean emailVerified = false;
+
     @ManyToMany(fetch = EAGER)
     @JoinTable(
             name = "user_roles",
@@ -37,6 +40,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+    @Column(name = "identification_number", unique = true, length = 80)
+    private String identificationNumber;
 
-    private Set<Long> menuIds = new HashSet<>();
 }
