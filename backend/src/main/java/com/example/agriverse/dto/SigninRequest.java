@@ -7,7 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter @AllArgsConstructor @NoArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SigninRequest {
 
     @NotEmpty(message = "Name field cannot be empty!\n")
@@ -17,5 +20,9 @@ public class SigninRequest {
     @NotEmpty(message = "Password cannot be empty!\n")
     @NotBlank
     private String password;
+
+    // Optional: client's current location (sent if available)
+    private Double latitude;
+    private Double longitude;
 
 }
