@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import BackButton from "@/components/BackButton";
 import { utilApi } from "@/api/util";
 import { useAuth } from "@/context/AuthContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -39,6 +40,7 @@ const ProfilePage = () => {
   return (
     <div className="min-h-[calc(100vh-8rem)] py-12 px-4">
       <div className="container mx-auto max-w-2xl space-y-6">
+        <BackButton className="-ml-2 mb-2" />
         <h1 className="text-3xl font-bold tracking-tight">Profile</h1>
         <p className="text-muted-foreground">Your account information</p>
 

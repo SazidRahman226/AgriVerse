@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import BackButton from "@/components/BackButton";
 import apiClient from "@/api/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/context/AuthContext";
@@ -47,6 +48,7 @@ export default function GovtOfficerDashboardPage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 space-y-8">
+        <BackButton />
         {/* ═══ Header ═══ */}
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 via-primary/5 to-transparent border border-border/50 p-6 sm:p-8">
           <div className="relative z-10">

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import BackButton from "@/components/BackButton";
 import { useAuth } from "@/context/AuthContext";
 import { forumApi, Post } from "@/api/forum";
 import { Link } from "react-router-dom";
@@ -37,6 +38,7 @@ const DashboardPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 space-y-8">
+        <BackButton />
         {/* ═══ Welcome Header ═══ */}
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-border/50 p-6 sm:p-8">
           <div className="relative z-10">

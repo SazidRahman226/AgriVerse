@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
+import BackButton from "@/components/BackButton";
 import { MapContainer, TileLayer, Marker, Popup, useMap, CircleMarker } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -325,6 +326,10 @@ const MapPage = () => {
 
     return (
         <div className="relative h-full w-full overflow-hidden flex flex-col">
+            {/* Floating Back Button */}
+            <div className="absolute top-3 right-3 z-[1000]">
+                <BackButton className="bg-background/90 backdrop-blur shadow-sm border border-border/50 hover:bg-background" />
+            </div>
             {/* ─── Map Background ─── */}
             <div className="absolute inset-0 z-0">
                 <MapContainer

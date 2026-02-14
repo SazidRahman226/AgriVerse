@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import BackButton from "@/components/BackButton";
 import { Link } from "react-router-dom";
 import { forumApi, Topic } from "@/api/forum";
 import { useAuth } from "@/context/AuthContext";
@@ -87,6 +88,7 @@ export default function ForumTopicsPage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="mx-auto w-full max-w-6xl px-4 py-8 space-y-6">
+        <BackButton />
         {/* ═══ Header ═══ */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>

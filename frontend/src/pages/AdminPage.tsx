@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import BackButton from "@/components/BackButton";
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -36,7 +37,7 @@ const AdminPage = () => {
   const onSubmit = async (data: GrantAdminFormData) => {
     setIsLoading(true);
     setLastResult(null);
-    
+
     try {
       const response = await utilApi.grantAdminAccess(data.username);
       setLastResult({ success: true, message: response || `Admin access granted to ${data.username}` });
@@ -48,7 +49,7 @@ const AdminPage = () => {
     } catch (error) {
       const axiosError = error as AxiosError<{ message?: string }>;
       let message = 'Failed to grant admin access. Please try again.';
-      
+
       if (axiosError.response?.status === 404) {
         message = `User "${data.username}" not found.`;
       } else if (axiosError.response?.status === 403) {
@@ -56,7 +57,7 @@ const AdminPage = () => {
       } else if (axiosError.response?.data?.message) {
         message = axiosError.response.data.message;
       }
-      
+
       setLastResult({ success: false, message });
       toast({
         title: 'Error',
@@ -71,6 +72,7 @@ const AdminPage = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-2xl mx-auto">
+        <BackButton className="mb-2" />
         <div className="mb-8 animate-fade-in">
           <div className="flex items-center gap-3 mb-2">
             <div className="h-10 w-10 rounded-lg bg-primary flex items-center justify-center">
@@ -134,11 +136,10 @@ const AdminPage = () => {
 
             {lastResult && (
               <div
-                className={`mt-6 p-4 rounded-lg flex items-start gap-3 ${
-                  lastResult.success
-                    ? 'bg-success/10 border border-success/20'
-                    : 'bg-destructive/10 border border-destructive/20'
-                }`}
+                className={`mt-6 p-4 rounded-lg flex items-start gap-3 ${lastResult.success
+                  ? 'bg-success/10 border border-success/20'
+                  : 'bg-destructive/10 border border-destructive/20'
+                  }`}
               >
                 {lastResult.success ? (
                   <CheckCircle className="h-5 w-5 text-success flex-shrink-0 mt-0.5" />
@@ -147,9 +148,8 @@ const AdminPage = () => {
                 )}
                 <div>
                   <p
-                    className={`font-medium ${
-                      lastResult.success ? 'text-success' : 'text-destructive'
-                    }`}
+                    className={`font-medium ${lastResult.success ? 'text-success' : 'text-destructive'
+                      }`}
                   >
                     {lastResult.success ? 'Success' : 'Error'}
                   </p>

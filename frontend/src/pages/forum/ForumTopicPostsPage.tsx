@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import BackButton from "@/components/BackButton";
 import { Link, useParams } from "react-router-dom";
 import { forumApi, Post, Page } from "@/api/forum";
 import { Card, CardContent } from "@/components/ui/card";
@@ -71,6 +72,7 @@ export default function ForumTopicPostsPage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="mx-auto w-full max-w-5xl px-4 py-8 space-y-6">
+        <BackButton />
         {/* ═══ Header ═══ */}
         <div>
           {/* Breadcrumb */}
